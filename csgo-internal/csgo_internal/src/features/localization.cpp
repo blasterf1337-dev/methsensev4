@@ -7,10 +7,16 @@
 #include <stdexcept>
 #include <unordered_map>
 
-static network::localization_t strings{};
+static network::localization_t& get_strings() {
+	static network::localization_t strings{};
+	return strings;
+}
 
-static const std::unordered_map<std::string, std::string>& fallback_strings() {
-	static const std::unordered_map<std::string, std::string> map = {
+struct fallback_entry {
+	const char* key;
+	const char* value;
+};
+static constexpr fallback_entry fallback_strings[] = {
 		{ "tab.ragebot", "Ragebot" },
 		{ "tab.ragebot.aimbot", "Aimbot" },
 		{ "tab.ragebot.antiaim", "Anti-aim" },
@@ -57,24 +63,24 @@ static const std::unordered_map<std::string, std::string>& fallback_strings() {
 		{ "yes", "Yes" },
 		{ "no", "No" },
 		{ "search", "Search..." },
-	};
-	return map;
-}
+};
 
 void localization::apply(const network::localization_t& l) {
-	strings = l;
+	get_strings() = l;
 
 	for (auto hotkey: hotkeys->m_hotkeys)
 		hotkey->translate();
 }
 
 std::string localization::get(const std::string& key) {
-	if (strings.contains(key))
-		return strings.at(key);
-
-	auto it = fallback_strings().find(key);
-	if (it != fallback_strings().end())
+	auto& strings = get_strings();
+	auto it = strings.find(key);
+	if (it != strings.end())
 		return it->second;
+
+	for (auto& entry : fallback_strings)
+		if (key == entry.key)
+			return entry.value;
 
 	return key;
 }
