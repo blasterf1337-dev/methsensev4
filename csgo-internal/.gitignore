@@ -1,0 +1,14 @@
+Debug/
+Release/
+Unprotected/
+*.pdb
+*.cso
+*.dll
+*.ilk
+*.exp
+*.lib
+*.obj
+*.idb
+.vs/
+.vscode/
+Microsoft/
