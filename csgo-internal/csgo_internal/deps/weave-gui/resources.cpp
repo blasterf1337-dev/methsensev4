@@ -23,9 +23,9 @@ namespace NS_GUI {
 
 		for (auto& name: files_to_create) {
 			auto& texture = textures[fnva1(name.c_str())];
-			texture = new render::gif_t{ utils::read_file_bin(std::vformat(STR("C:\\Weave\\assets\\{}.png"), std::make_format_args(name))) };
+			texture = new render::gif_t{ utils::read_file_bin(std::vformat(STR("C:\\weave\\assets\\{}.png"), std::make_format_args(name))) };
 
-			//D3DXCreateTextureFromFileA(device, std::vformat(STR("C:\\Weave\\assets\\{}.png"), std::make_format_args(name)).c_str(), (LPDIRECT3DTEXTURE9*)&texture);
+			//D3DXCreateTextureFromFileA(device, std::vformat(STR("C:\\weave\\assets\\{}.png"), std::make_format_args(name)).c_str(), (LPDIRECT3DTEXTURE9*)&texture);
 		}
 
 		if (!files_to_create.empty()) {

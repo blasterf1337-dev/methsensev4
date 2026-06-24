@@ -31,7 +31,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{6c8a0bdb-e377-4741-8894-cbb4dd5dd7a7}</ProjectGuid>
     <RootNamespace>csgosln</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>csgo_internal</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -105,21 +105,21 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(SolutionDir)/csgo_internal/deps/freetype/include/;$(IncludePath);C:\vcpkg\installed\x86-windows-static\include;C:\luajit\src</IncludePath>
+    <IncludePath>C:\Users\OOGABOOGAEMA\source\repos\weave_v3\csgo-internal\csgo_internal\deps\freetype\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(SolutionDir)/csgo_internal/deps/freetype/include/;$(IncludePath);C:\vcpkg\installed\x86-windows-static\include;C:\luajit\src</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(SolutionDir)/csgo_internal/deps/freetype;C:\vcpkg\installed\x86-windows-static\debug\lib;C:\luajit\lib\debug;$(LibraryPath)</LibraryPath>
     <MultiProcFXC>true</MultiProcFXC>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(SolutionDir)/csgo_internal/deps/freetype/include;$(IncludePath);C:\vcpkg\installed\x86-windows-static\include;C:\luajit\src;C:\vcpkg\installed\x86-windows-static-md\include</IncludePath>
+    <IncludePath>C:\Users\OOGABOOGAEMA\source\repos\weave_v3\csgo-internal\csgo_internal\deps\freetype\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(SolutionDir)/csgo_internal/deps/freetype/include/;$(IncludePath);C:\vcpkg\installed\x86-windows-static\include;C:\luajit\src</IncludePath>
     <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(SolutionDir)/csgo_internal/deps/freetype;C:\vcpkg\installed\x86-windows-static\lib;C:\vcpkg\installed\x86-windows-static-md\lib;C:\luajit\lib\release;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Unprotected|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(SolutionDir)/csgo_internal/deps/freetype/include;$(IncludePath);C:\Users\admin\Desktop\vcpkg\vcpkg\installed\x86-windows-static\include</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(SolutionDir)/csgo_internal/deps/freetype;C:\Users\admin\Desktop\vcpkg\vcpkg\installed\x86-windows-static\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\OOGABOOGAEMA\source\repos\weave_v3\csgo-internal\csgo_internal\deps\freetype\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(SolutionDir)/csgo_internal/deps/freetype/include/;$(IncludePath);C:\vcpkg\installed\x86-windows-static\include;C:\luajit\src</IncludePath>
+    <LibraryPath>C:\Users\OOGABOOGAEMA\source\repos\weave_v3\csgo-internal\csgo_internal\deps\freetype;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(SolutionDir)/csgo_internal/deps/freetype;C:\Users\admin\Desktop\vcpkg\vcpkg\installed\x86-windows-static\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
   </PropertyGroup>
@@ -299,6 +299,7 @@
     <ClCompile Include="deps\weave-gui\shapes\shapes.cpp" />
     <ClCompile Include="deps\weave-gui\style.cpp" />
     <ClCompile Include="src\blur\blur.cpp" />
+    <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\features\discord.cpp" />
     <ClCompile Include="src\features\knifebot.cpp" />
     <ClCompile Include="src\features\localization.cpp" />
@@ -330,7 +331,7 @@
     <ClCompile Include="deps\imgui\imgui.cpp" />
     <ClCompile Include="deps\imgui\imgui_demo.cpp" />
     <ClCompile Include="deps\imgui\imgui_draw.cpp" />
-    <ClCompile Include="deps\imgui\imgui_freetype.cpp" />
+    <!--<ClCompile Include="deps\imgui\imgui_freetype.cpp" />-->
     <ClCompile Include="deps\imgui\imgui_impl_dx9.cpp" />
     <ClCompile Include="deps\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="deps\imgui\imgui_tables.cpp" />
@@ -445,6 +446,7 @@
     <ClInclude Include="bytes\weapon_icons.h" />
     <ClInclude Include="src\features\visuals\chams.hpp" />
     <ClInclude Include="src\cheat.hpp" />
+    <ClInclude Include="src\config.hpp" />
     <ClInclude Include="sdk\checksum_crc.h" />
     <ClInclude Include="sdk\class_id.hpp" />
     <ClInclude Include="sdk\client.hpp" />

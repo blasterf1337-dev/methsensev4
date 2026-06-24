@@ -1336,10 +1336,12 @@ namespace NS_GUI::controls {
 					std::string* color_text = &m_color_text;
 
 					auto update_color_text = [=]() {
+						auto swapped = std::byteswap(m_value->u32());
+						auto masked = swapped & 0x00FFFFFF;
 						if (m_modify_alpha)
-							*color_text = std::vformat(STR("{:08X}"), std::make_format_args(std::byteswap(m_value->u32()))).substr(0, max_size);
+							*color_text = std::vformat(STR("{:08X}"), std::make_format_args(swapped)).substr(0, max_size);
 						else
-							*color_text = std::vformat(STR("{:06X}"), std::make_format_args(std::byteswap(m_value->u32() & 0x00FFFFFF))).substr(0, max_size);
+							*color_text = std::vformat(STR("{:06X}"), std::make_format_args(masked)).substr(0, max_size);
 					};
 
 					colorpicker_impl->on_change(update_color_text);

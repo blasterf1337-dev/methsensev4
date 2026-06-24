@@ -26,9 +26,9 @@
     <ClCompile Include="deps\imgui\imgui_draw.cpp">
       <Filter>deps\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="deps\imgui\imgui_freetype.cpp">
+    <!--<ClCompile Include="deps\imgui\imgui_freetype.cpp">
       <Filter>deps\imgui</Filter>
-    </ClCompile>
+    </ClCompile>-->
     <ClCompile Include="deps\imgui\imgui_impl_dx9.cpp">
       <Filter>deps\imgui</Filter>
     </ClCompile>

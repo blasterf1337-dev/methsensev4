@@ -4,8 +4,8 @@
 #include "utils/macros.hpp"
 
 namespace NS_GUI {
-	inline color_t accent_color1 = { 255, 139, 59 };
-	inline color_t accent_color2 = { 251, 86, 103 };
+	inline color_t accent_color1 = { 255, 161, 0 };
+	inline color_t accent_color2 = { 255, 94, 77 };
 
 	class c_style {
 	public:
