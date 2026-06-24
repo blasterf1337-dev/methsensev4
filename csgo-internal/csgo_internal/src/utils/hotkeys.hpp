@@ -14,7 +14,7 @@ struct hotkey_t {
 	void translate();
 
 	__forceinline hotkey_t(e_type type = e_type::hold, uint32_t hash = HASH("hotkey-uninitialized"), std::string localize_name = STRS("?"))
-		: m_type(type), m_hash(hash), m_localize_name(localize_name) {}
+		: m_type(type), m_hash(hash), m_localize_name(localize_name) { translate(); }
 
 	__forceinline bool is_valid() const { return m_type == e_type::always_on || m_key > 0; }
 
