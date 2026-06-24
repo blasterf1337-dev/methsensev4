@@ -44,7 +44,7 @@ static void render_binds(gui::render_context_t& ctx, gui::instance::window_t* wi
 	using namespace gui;
 
 	const auto& active_hotkeys = collect_active_hotkeys();
-	window->m_opened = settings->misc.hotkeys_list && (!active_hotkeys.empty() || menu::open);
+	window->m_opened = settings->misc.hotkeys_list && (!active_hotkeys.empty() || menu->m_opened);
 
 	constexpr auto header_size = 32.f;
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "../../base_includes.hpp"
-#include "../../features/menu.hpp"
+#include "../../features/newmenu.hpp"
 
 struct indicators_t {
 	gui::instance::window_t* m_window{};

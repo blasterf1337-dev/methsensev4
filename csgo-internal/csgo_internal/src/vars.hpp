@@ -379,9 +379,7 @@ namespace incheat_vars {
 
 		void init();
 
-		static json_t dump_settings_add();
-		static void save(std::string_view id);
-		static void load(std::string_view id);
+
 	};
 #pragma pack(pop)
 } // namespace incheat_vars

@@ -5,7 +5,7 @@
 #include "../game/weapons.hpp"
 #include "../interfaces.hpp"
 //#include "../features/exmenu.hpp"
-#include "../features/menu.hpp"
+#include "../features/newmenu.hpp"
 
 namespace hooks::v_panel {
 
@@ -82,7 +82,7 @@ namespace hooks::v_panel {
 		}
 
 		if (current_panel == panels[focus_overlay_panel]) {
-			interfaces::v_panel->set_mouse_input_enabled(current_panel, menu::open);
+			interfaces::v_panel->set_mouse_input_enabled(current_panel, menu->m_opened);
 		}
 
 		original(interfaces::v_panel, current_panel, force_repaint, allow_force);

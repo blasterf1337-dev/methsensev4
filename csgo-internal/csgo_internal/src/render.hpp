@@ -2,6 +2,7 @@
 #include "../deps/imgui/imgui.h"
 #include "base_includes.hpp"
 #include "utils/color.hpp"
+#include <mutex>
 #include "utils/matrix.hpp"
 
 #include <d3dx9.h>

@@ -1,7 +1,6 @@
 #include "hooks.hpp"
 #include "../render.hpp"
-//#include "../features/exmenu.hpp"
-#include "../features/menu.hpp"
+#include "../features/newmenu.hpp"
 #include "../utils/hotkeys.hpp"
 
 namespace hooks {
@@ -13,15 +12,17 @@ namespace hooks {
 			return true;
 		}
 
-		if ((w_param == VK_INSERT || w_param == VK_DELETE) && msg == WM_KEYUP)
-			menu::open = !menu::open;
+		if ((w_param == VK_INSERT || w_param == VK_DELETE) && msg == WM_KEYUP) {
+			menu->m_opened = !menu->m_opened;
+			menu->window->m_opened = menu->m_opened;
+		}
 
 		//if (w_param == VK_F11 && msg == WM_KEYUP)
 		//	ctx->unload = true;
 
 		hotkeys->on_wnd_proc(msg, w_param);
 
-		if (menu::open) {
+		if (menu->m_opened) {
 			if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, w_param, l_param) || ImGui::GetIO().WantTextInput)
 				return true;
 		}

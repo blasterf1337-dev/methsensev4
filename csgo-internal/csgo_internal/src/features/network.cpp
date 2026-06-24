@@ -136,7 +136,7 @@ std::vector<std::string> network::get_images() {
 }
 
 std::optional<network::localization_t> network::get_localization() {
-	const auto buf = utils::read_file_bin("C:\\Weave\\lang_native.json");
+	const auto buf = utils::read_file_bin("C:\\weave\\lang_native.json");
 	const auto localization = json_t::parse(buf);
 	return localization.get<network::localization_t>();
 }

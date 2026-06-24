@@ -15,7 +15,8 @@
 
 #include "features/bullets.hpp"
 #include "features/discord.hpp"
-#include "features/menu.hpp"
+#include "features/newmenu.hpp"
+#include "config.hpp"
 #include "features/network.hpp"
 #include "features/visuals/chams.hpp"
 #include "features/visuals/logs.hpp"
@@ -81,18 +82,13 @@ namespace cheat {
 
 		render::current_load_stage_name = STRS("Setting up...");
 
-		//menu->window->set_size(gui::dpi::scale(menu->window_size));
-		//menu->window->set_loading(STRS("Preparing..."));
-
-		//gui::add_instance(menu->window);
-
 		create_dir_if_not_exists(STRS("weave\\"));
 		create_dir_if_not_exists(STRS("weave\\settings\\"));
 		create_dir_if_not_exists(STRS("weave\\lua\\"));
 
-		create_dir_if_not_exists(STRS("C:\\Weave"));
-		create_dir_if_not_exists(STRS("C:\\Weave\\assets"));
-		create_dir_if_not_exists(STRS("C:\\Weave\\fonts"));
+		create_dir_if_not_exists(STRS("C:\\weave"));
+		create_dir_if_not_exists(STRS("C:\\weave\\assets"));
+		create_dir_if_not_exists(STRS("C:\\	\\fonts"));
 
 		PUSH_LOG(STRSC("getting modules\n"));
 
@@ -159,9 +155,13 @@ namespace cheat {
 		gui::resources::downloaded = true;
 		render::can_render = true;
 
+		menu->create_gui();
+		menu->window->m_opened = true;
+		gui::add_instance(menu->window);
+
 		PUSH_LOG(STRSC("resources downloaded\n"));
-		//menu->window->stop_loading();
-		user_settings::load("settings");
+		config::refresh();
+		config::load_last();
 		PUSH_LOG(STRSC("injected\n"));
 
 		constexpr std::pair<color_t, color_t> colors = {
@@ -169,27 +169,11 @@ namespace cheat {
 			{ 255, 59, 80 }
 		};
 
-		const auto weave_logo = STRS(R"(WWWWWWWW                           WWWWWWWW                                                                       
-W::::::W                           W::::::W                                                                       
-W::::::W                           W::::::W                                                                       
-W::::::W                           W::::::W                                                                       
- W:::::W           WWWWW           W:::::W eeeeeeeeeeee    aaaaaaaaaaaaavvvvvvv           vvvvvvv eeeeeeeeeeee    
-  W:::::W         W:::::W         W:::::Wee::::::::::::ee  a::::::::::::av:::::v         v:::::vee::::::::::::ee  
-   W:::::W       W:::::::W       W:::::We::::::eeeee:::::eeaaaaaaaaa:::::av:::::v       v:::::ve::::::eeeee:::::ee
-    W:::::W     W:::::::::W     W:::::We::::::e     e:::::e         a::::a v:::::v     v:::::ve::::::e     e:::::e
-     W:::::W   W:::::W:::::W   W:::::W e:::::::eeeee::::::e  aaaaaaa:::::a  v:::::v   v:::::v e:::::::eeeee::::::e
-      W:::::W W:::::W W:::::W W:::::W  e:::::::::::::::::e aa::::::::::::a   v:::::v v:::::v  e:::::::::::::::::e 
-       W:::::W:::::W   W:::::W:::::W   e::::::eeeeeeeeeee a::::aaaa::::::a    v:::::v:::::v   e::::::eeeeeeeeeee  
-        W:::::::::W     W:::::::::W    e:::::::e         a::::a    a:::::a     v:::::::::v    e:::::::e           
-         W:::::::W       W:::::::W     e::::::::e        a::::a    a:::::a      v:::::::v     e::::::::e          
-          W:::::W         W:::::W       e::::::::eeeeeeeea:::::aaaa::::::a       v:::::v       e::::::::eeeeeeee  
-           W:::W           W:::W         ee:::::::::::::e a::::::::::aa:::a       v:::v         ee:::::::::::::e  
-            WWW             WWW            eeeeeeeeeeeeee  aaaaaaaaaa  aaaa        vvv            eeeeeeeeeeeeee)");
 
 		game_console->clear();
 		std::this_thread::sleep_for(200ms);
 		game_console->print_colored_id(STR("\n\n\n"));
-		game_console->print_gradient_text(weave_logo, colors);
+		game_console->print_gradient_text(STRS("weave"), colors);
 		game_console->print_colored_id(STR("\n\n\n"));
 
 		skin_changer->parse();
@@ -215,7 +199,7 @@ W::::::W                           W::::::W
 		static std::mutex mutex{};
 		THREAD_SAFE(mutex);
 
-		FILE* file = fopen(STRSC("C:\\Weave\\log.txt"), STRSC("ab"));
+		FILE* file = fopen(STRSC("C:\\weave\\log.txt"), STRSC("ab"));
 		_fseeki64(file, 0, SEEK_END);
 
 		char output[4096] = {};

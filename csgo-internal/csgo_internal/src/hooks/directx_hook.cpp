@@ -7,7 +7,7 @@
 
 //#include "../features/exmenu.hpp"
 #include "../features/bullets.hpp"
-#include "../features/menu.hpp"
+#include "../features/newmenu.hpp"
 
 #include "../features/visuals/esp.hpp"
 #include "../features/visuals/hitmarker.hpp"
@@ -83,7 +83,7 @@ namespace hooks::directx {
 		cheat_logs->render();
 
 		gui::update();
-		menu::render();
+		gui::render();
 		gui::render();
 
 		gui::msgbox::render();

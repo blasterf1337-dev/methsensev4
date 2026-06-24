@@ -6,6 +6,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <format>
+#include <mutex>
 #include <functional>
 #include <iostream>
 #include <memory>
@@ -49,7 +50,7 @@ struct cheat_t {
 
 template<typename... args_t>
 static __forceinline std::string dformat(std::string_view rt_fmt_str, args_t&&... args) {
-	return std::vformat(rt_fmt_str, std::make_format_args(std::forward<args_t>(args)...));
+	return std::vformat(rt_fmt_str, std::make_format_args(args...));
 }
 
 namespace fs = std::filesystem;

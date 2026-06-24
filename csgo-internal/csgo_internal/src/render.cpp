@@ -2,7 +2,7 @@
 #include "hooks/hooks.hpp"
 #include "utils/displacement.hpp"
 
-#include "../deps/imgui/imgui_freetype.h"
+//#include "../deps/imgui/imgui_freetype.h"
 #include "../deps/imgui/imgui_impl_dx9.h"
 #include "../deps/imgui/imgui_impl_win32.h"
 #include "../deps/weave-gui/include.hpp"
@@ -62,9 +62,9 @@ namespace render {
 			0,
 		};
 
-		//ImGui::GetIO().Fonts->AddFontFromFileTTF(bold ? STRSC("C:\\Weave\\fonts\\fa-solid-900.ttf") : STRSC("C:\\Weave\\fonts\\fa-regular-400.ttf"), size, &cfg, ranges);
-		ImGui::GetIO().Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\fa-solid-900.ttf"), size, &cfg, ranges);
-		ImGui::GetIO().Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\fa-brands-400.ttf"), size, &cfg, ranges);
+		//ImGui::GetIO().Fonts->AddFontFromFileTTF(bold ? STRSC("C:\\weave\\fonts\\fa-solid-900.ttf") : STRSC("C:\\weave\\fonts\\fa-regular-400.ttf"), size, &cfg, ranges);
+		ImGui::GetIO().Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\fa-solid-900.ttf"), size, &cfg, ranges);
+		ImGui::GetIO().Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\fa-brands-400.ttf"), size, &cfg, ranges);
 
 		cfg.PixelSnapH = false;
 		cfg.GlyphMinAdvanceX = 0.f;
@@ -81,7 +81,7 @@ namespace render {
 		};
 
 		ImGui::GetIO().Fonts->AddFontFromFileTTF(
-				bold ? STRSC("C:\\Weave\\fonts\\Source-Han-Sans-CN-Bold.ttf") : STRSC("C:\\Weave\\fonts\\Source-Han-Sans-CN-Regular.ttf"),
+				bold ? STRSC("C:\\weave\\fonts\\Source-Han-Sans-CN-Bold.ttf") : STRSC("C:\\weave\\fonts\\Source-Han-Sans-CN-Regular.ttf"),
 				size, &cfg,
 				ranges);
 
@@ -142,29 +142,29 @@ namespace render {
 		constexpr auto icon_size_mod = 3.f / 4.f;
 
 		io.Fonts->TexDesiredWidth = 16384; // Increase as needed
-		io.FontDefault = fonts::menu_main = io.Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\RobotoFlex-Regular.ttf"), dpi::scale(14.5f), &cfg, ranges);
+		io.FontDefault = fonts::menu_main = io.Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\RobotoFlex-Regular.ttf"), dpi::scale(14.5f), &cfg, ranges);
 		//merge_with_chinese(cfg, dpi::scale(14.5f), false);
 		merge_with_fontawesome(cfg, dpi::scale(14.5f * icon_size_mod), dpi::scale(14.5f));
 
-		fonts::menu_main_weapons = io.Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\RobotoFlex-Regular.ttf"), dpi::scale(14.5f), &cfg, ranges);
+		fonts::menu_main_weapons = io.Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\RobotoFlex-Regular.ttf"), dpi::scale(14.5f), &cfg, ranges);
 		merge_with_weapons(cfg, dpi::scale(14.5f));
 
-		fonts::menu_bold = io.Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\RobotoFlex-Bold.ttf"), dpi::scale(14.5f), &cfg, ranges);
+		fonts::menu_bold = io.Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\RobotoFlex-Bold.ttf"), dpi::scale(14.5f), &cfg, ranges);
 		//merge_with_chinese(cfg, dpi::scale(14.5f), true);
 		merge_with_fontawesome(cfg, dpi::scale(14.5f * icon_size_mod), dpi::scale(14.5f), true);
 
-		fonts::menu_small = io.Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\RobotoFlex-Regular.ttf"), dpi::scale(14.f), &cfg, ranges);
+		fonts::menu_small = io.Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\RobotoFlex-Regular.ttf"), dpi::scale(14.f), &cfg, ranges);
 		//merge_with_chinese(cfg, dpi::scale(14.f), false);
 
-		fonts::menu_small_bold = io.Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\RobotoFlex-Bold.ttf"), dpi::scale(14.f), &cfg, ranges);
+		fonts::menu_small_bold = io.Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\RobotoFlex-Bold.ttf"), dpi::scale(14.f), &cfg, ranges);
 		//merge_with_chinese(cfg, dpi::scale(14.f), true);
 
 		cfg.GlyphExtraSpacing = { 0.25f, 0.f };
-		fonts::menu_big = io.Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\RobotoFlex-Bold.ttf"), dpi::scale(18.f), &cfg, ranges);
+		fonts::menu_big = io.Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\RobotoFlex-Bold.ttf"), dpi::scale(18.f), &cfg, ranges);
 		//merge_with_chinese(cfg, dpi::scale(18.f), true);
 		cfg.GlyphExtraSpacing = { 0.f, 0.f };
 
-		fonts::menu_small_semibold = io.Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\RobotoFlex-SemiBold.ttf"), dpi::scale(14.f), &cfg, ranges);
+		fonts::menu_small_semibold = io.Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\RobotoFlex-SemiBold.ttf"), dpi::scale(14.f), &cfg, ranges);
 		//merge_with_chinese(cfg, dpi::scale(14.f), false);
 
 		fonts::esp_default = io.Fonts->AddFontFromFileTTF(STRSC("C:\\Windows\\Fonts\\Verdana.ttf"), dpi::scale(12.f), &cfg, io.Fonts->GetGlyphRangesCyrillic());
@@ -188,15 +188,14 @@ namespace render {
 		}
 
 		if (dpi::_get_actual_scale() > 1.f) {
-			fonts::esp_small = io.Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\RobotoFlex-Regular.ttf"), dpi::scale(11.f), &cfg, io.Fonts->GetGlyphRangesCyrillic());
+			fonts::esp_small = io.Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\RobotoFlex-Regular.ttf"), dpi::scale(11.f), &cfg, io.Fonts->GetGlyphRangesCyrillic());
 		} else {
-			SET_AND_RESTORE(cfg.FontBuilderFlags, ImGuiFreeTypeBuilderFlags_MonoHinting | ImGuiFreeTypeBuilderFlags_Monochrome);
-			fonts::esp_small = io.Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\Smallest-Pixel7.ttf"), dpi::scale(10.f), &cfg, io.Fonts->GetGlyphRangesCyrillic());
+			fonts::esp_small = io.Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\Smallest-Pixel7.ttf"), dpi::scale(10.f), &cfg, io.Fonts->GetGlyphRangesCyrillic());
 		}
 
-		fonts::menu_desc = io.Fonts->AddFontFromFileTTF(STRSC("C:\\Weave\\fonts\\Root-UI-Bold.ttf"), dpi::scale(14.f), &cfg, io.Fonts->GetGlyphRangesCyrillic());
+		fonts::menu_desc = io.Fonts->AddFontFromFileTTF(STRSC("C:\\weave\\fonts\\Root-UI-Bold.ttf"), dpi::scale(14.f), &cfg, io.Fonts->GetGlyphRangesCyrillic());
 
-		ImGuiFreeType::BuildFontAtlas(io.Fonts);
+		io.Fonts->Build();
 		ImGui_ImplDX9_CreateDeviceObjects();
 
 		PUSH_LOG(STRSC("fonts created\n"));

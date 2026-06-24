@@ -1,5 +1,7 @@
 #include "skin_changer.hpp"
 #include "chams.hpp"
+#include "../newmenu.hpp"
+#include "../../utils/encoding.hpp"
 
 #include "../../../sdk/class_id.hpp"
 
@@ -7,9 +9,6 @@
 #include "../../interfaces.hpp"
 
 #include "../../game/players.hpp"
-
-#include "../menu.hpp"
-#include "../network.hpp"
 
 #include <fstream>
 #include <map>
@@ -404,7 +403,7 @@ STFI void update_weapon(base_combat_weapon_t* weapon) {
 	if (target_skin != 0 && target_skin != fallback_paint_kit) {
 		fallback_paint_kit = target_skin;
 
-		if (menu::open)
+		if (menu->m_opened)
 			perform_full_update(weapon);
 	}
 

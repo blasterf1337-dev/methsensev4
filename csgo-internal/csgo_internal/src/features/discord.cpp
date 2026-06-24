@@ -26,3 +26,5 @@ void discord::update() {
 
 #endif
 */
+
+// note: no needed at the moment, but maybe in the future

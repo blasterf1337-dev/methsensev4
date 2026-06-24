@@ -50,7 +50,7 @@ namespace esp {
 
 		if (flags.get() != 0) {
 			if (entry.m_friend_cheat == 1)
-				text_arr.emplace_back(STR("Weave"), color_t{ 254, 103, 49 }.modify_alpha(box.m_alpha));
+				text_arr.emplace_back(STR("weave"), color_t{ 254, 103, 49 }.modify_alpha(box.m_alpha));
 			else if (entry.m_friend_cheat == 2)
 				text_arr.emplace_back(STR("Airflow"), color_t{ 150, 113, 220 }.modify_alpha(box.m_alpha));
 			else if (entry.m_friend_cheat == 3)
