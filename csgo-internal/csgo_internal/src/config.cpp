@@ -5,6 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include <unordered_map>
+#include <unordered_set>
 #include <shlobj.h>
 
 namespace fs = std::filesystem;
@@ -54,15 +55,27 @@ namespace config {
 
 		auto name_map = read_names();
 
+		std::unordered_set<std::string> seen;
+
 		for (const auto& entry : fs::directory_iterator(d)) {
 			if (!entry.is_regular_file())
 				continue;
 
 			auto p = entry.path();
-			if (p.extension() != STRS(".cfg"))
+			auto stem = p.stem().string();
+
+			// Skip internal files
+			if (stem == STRS(".names") || stem == STRS(".last"))
 				continue;
 
-			auto stem = p.stem().string();
+			// Track seen names to avoid duplicates (old + new format)
+			if (seen.count(stem))
+				continue;
+			seen.insert(stem);
+
+			// Accept both .cfg (new) and extensionless (old format)
+			if (p.extension() != STRS(".cfg") && !p.extension().empty())
+				continue;
 
 			entry_t e;
 			e.name = stem;
@@ -168,15 +181,24 @@ namespace config {
 		std::memcpy(&settings->begin, &default_settings->begin,
 			(uintptr_t)&settings->end - (uintptr_t)&settings->begin);
 
+		bool old_format = false;
+
 		if (root.contains(STRS("dpi_scale"))) {
 			settings->dpi_scale = root[STRS("dpi_scale")].get<int>();
 		}
 
-		if (!root.contains(STRS("vars")))
-			return;
+		// Backward compat: old format used "settings" instead of "vars"
+		const json_t* vars = nullptr;
+		if (root.contains(STRS("vars"))) {
+			vars = &root[STRS("vars")];
+		} else if (root.contains(STRS("settings"))) {
+			vars = &root[STRS("settings")];
+			old_format = true;
+		}
 
-		const auto& vars = root[STRS("vars")];
-		for (auto it = vars.begin(); it != vars.end(); ++it) {
+		if (!vars)
+			return;
+		for (auto it = vars->begin(); it != vars->end(); ++it) {
 			const auto& key = it.key();
 			const auto& val = it.value();
 
@@ -266,21 +288,68 @@ namespace config {
 		if (!valid_name(name))
 			return false;
 
-		const auto p = path(name);
-		std::ifstream file(p, std::ios::binary | std::ios::ate);
-		if (!file.good())
+		std::string json_str;
+		bool was_old_format = false;
+
+		// Try new format (.cfg) first, then fall back to old extensionless format
+		auto p = path(name);
+		{
+			std::ifstream file(p, std::ios::binary | std::ios::ate);
+			if (file.good()) {
+				auto size = file.tellg();
+				file.seekg(0, std::ios::beg);
+				json_str.resize((size_t)size);
+				file.read(json_str.data(), size);
+			}
+		}
+
+		if (json_str.empty()) {
+			// Old format: no .cfg extension
+			p = dir() + name;
+			std::ifstream file(p, std::ios::binary | std::ios::ate);
+			if (file.good()) {
+				auto size = file.tellg();
+				file.seekg(0, std::ios::beg);
+				json_str.resize((size_t)size);
+				file.read(json_str.data(), size);
+				was_old_format = true;
+			}
+		}
+
+		if (json_str.empty())
 			return false;
-
-		auto size = file.tellg();
-		file.seekg(0, std::ios::beg);
-
-		std::string json_str((size_t)size, '\0');
-		file.read(json_str.data(), size);
-		file.close();
 
 		try {
 			auto root = json_t::parse(json_str);
 			deserialize(root);
+
+			// If old format, also try to load hotkeys from old hotkeys file
+			if (was_old_format) {
+				// Old hotkeys file was at weave\settings\{username}
+				char username[256];
+				DWORD len = sizeof(username);
+				if (GetUserNameA(username, &len)) {
+					auto hk_path = dir() + std::string(username);
+					std::ifstream hk_file(hk_path, std::ios::binary | std::ios::ate);
+					if (hk_file.good()) {
+						auto hk_size = hk_file.tellg();
+						hk_file.seekg(0, std::ios::beg);
+						std::string hk_str((size_t)hk_size, '\0');
+						hk_file.read(hk_str.data(), hk_size);
+						hk_file.close();
+						try {
+							auto hk_root = json_t::parse(hk_str);
+							if (hk_root.contains(STRS("hotkeys")))
+								deserialize(hk_root);
+						} catch (...) {}
+					}
+				}
+
+				// Re-save in new format to migrate
+				auto names = read_names();
+				auto dn = names.count(name) ? names[name] : name;
+				save(name, dn);
+			}
 		}
 		catch (const std::exception& e) {
 			PUSH_LOG("failed to parse config '%s': %s\n", name.c_str(), e.what());

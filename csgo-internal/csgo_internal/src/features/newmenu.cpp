@@ -728,6 +728,23 @@ static void misc_tab() {
 	menu->content->add(controls::checkbox(STRS("Retreat on key"), &settings->movement.peek_assist_retreat_on_key));
 }
 
+static std::vector<std::string> weapon_names_for_group(int group) {
+	switch (group) {
+		case 1: return { STRS("General"), STRS("SSG 08"), STRS("AWP") };
+		case 2: return { STRS("General"), STRS("G3SG1"), STRS("SCAR-20") };
+		case 3: return { STRS("General"), STRS("Desert Eagle"), STRS("R8 Revolver") };
+		case 4: return { STRS("General"), STRS("Glock-18"), STRS("P2000"), STRS("USP-S"),
+			STRS("Dual Berettas"), STRS("P250"), STRS("Tec-9"), STRS("Five-SeveN"), STRS("CZ75 Auto") };
+		case 5: return { STRS("General"), STRS("Galil AR"), STRS("FAMAS"), STRS("AK-47"),
+			STRS("M4A4"), STRS("M4A1-S"), STRS("SG 553"), STRS("AUG") };
+		case 6: return { STRS("General"), STRS("M249"), STRS("Negev") };
+		case 7: return { STRS("General"), STRS("Nova"), STRS("XM1014"), STRS("Sawed-Off"), STRS("MAG-7") };
+		case 8: return { STRS("General"), STRS("MAC-10"), STRS("MP9"), STRS("MP7"),
+			STRS("MP5-SD"), STRS("UMP-45"), STRS("P90"), STRS("PP-Bizon") };
+		default: return { STRS("General") };
+	}
+}
+
 static void ragebot_aimbot_tab() {
 	static int weapon_group = 0;
 	static int weapon_slot = 0;
@@ -745,16 +762,14 @@ static void ragebot_aimbot_tab() {
 		STRS("Pistols"), STRS("Rifles"), STRS("Heavies"), STRS("Shotguns"), STRS("SMGs")
 	};
 
-	const std::vector<std::string> slot_names = {
-		STRS("General"), STRS("Slot 1"), STRS("Slot 2"), STRS("Slot 3"),
-		STRS("Slot 4"), STRS("Slot 5"), STRS("Slot 6"), STRS("Slot 7"), STRS("Slot 8"), STRS("Slot 9")
-	};
-
-	menu->content->add(controls::dropbox(STRS("Group"), &weapon_group, group_names, false));
-	menu->content->add(controls::dropbox(STRS("Weapon"), &weapon_slot, slot_names, false));
-
 	weapon_group = std::clamp(weapon_group, 0, 8);
-	weapon_slot = std::clamp(weapon_slot, 0, 9);
+	auto slot_names = weapon_names_for_group(weapon_group);
+	weapon_slot = std::clamp(weapon_slot, 0, (int)slot_names.size() - 1);
+
+	menu->content->add(controls::dropbox(STRS("Group"), &weapon_group, group_names, false, [=](bool) {
+		menu->content->update_state(__menu::on_tab_change);
+	}));
+	menu->content->add(controls::dropbox(STRS("Weapon"), &weapon_slot, slot_names, false));
 
 	auto& wpn = settings->ragebot.weapons[weapon_group].settings[weapon_slot];
 
